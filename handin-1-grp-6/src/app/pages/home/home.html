@@ -1,1 +1,13 @@
-<p>home works!</p>
+<h2 class="text-xl font-bold mb-4">Credit Cards</h2>
+
+<p *ngIf="loading()">Loading cards...</p>
+
+<ul *ngIf="!loading()">
+  <li *ngFor="let card of cards()" class="p-2">
+    <strong>Card number:</strong> {{ card.cardNumber }}<br />
+    <strong>Card holder:</strong> {{ card.cardHolderName }}<br />
+    <strong>Issuer:</strong> {{ card.issuer }}<br />
+    <strong>CVC:</strong> {{ card.cscCode }}<br />
+    <strong>Expireation:</strong> {{ card.expirationMonth }}/{{ card.expirationYear }}
+  </li>
+</ul>
