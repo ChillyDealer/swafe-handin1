@@ -7,14 +7,14 @@ export class LoginService {
   private readonly baseUrl = 'https://assignment1.swafe.dk/api';
 
   private readonly _token = signal<string | null>(null); 
-  readonly token = computed(() => this._token()); 
+  readonly token = computed(() => this._token());
   readonly isLoggedIn = computed(() => !!this.token()); 
   readonly ready = signal(false);
 
   constructor(private http: HttpClient) {
     localStorage.removeItem('auth_token'); // clear old token
 
-    queueMicrotask(() => {
+    queueMicrotask(() => { // schedule login, en funktion i angular 
       this.login('g06@bank.dk', '1234').subscribe({
         next: () => {
           this.ready.set(true);
@@ -37,10 +37,10 @@ export class LoginService {
 
   login(username: string, password: string) {
     return this.http
-      .post(`${this.baseUrl}/Login`, { username, password }, { responseType: 'text' })
+      .post(`${this.baseUrl}/Login`, { username, password }, { responseType: 'text' }) // ikke json men text
       .pipe(
         map((token) => {
-          if (!token) throw new Error('no token');
+          if (!token) throw new Error('no token'); 
           this._token.set(token);
           return token;
         }),
