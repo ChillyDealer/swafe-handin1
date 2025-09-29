@@ -8,5 +8,5 @@ import { TransactionHistory } from "./transaction-history/transaction-history";
   styleUrl: './transactions.css'
 })
 export class Transactions {
-
+  
 }
