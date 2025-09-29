@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
+import {FormField} from '../../../../form-field/form-field';
 
 @Component({
   selector: 'app-create-credit-card-modal',
-  imports: [],
+  standalone: true,
+  imports: [
+    FormField
+  ],
   templateUrl: './create-credit-card-modal.html',
   styleUrl: './create-credit-card-modal.css'
 })
