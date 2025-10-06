@@ -34,8 +34,8 @@ export class CreditCardDetails {
       this.http.delete(`https://assignment1.swafe.dk/api/CreditCard/cardnumber?cardnumber=${cardNumber}`)
         .subscribe({
           next: () => {
-            this.cardDeleted.emit(cardNumber);
             this.onClose();
+            window.location.reload();
           },
           error: (err) => {
             console.error('Error:', err);
