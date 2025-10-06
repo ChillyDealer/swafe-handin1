@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { NgIf, NgFor } from '@angular/common';
 import { LoginService } from '../../login-service';
 import { CreditCard } from '../../Models/CreditCard';
+import { CreditCardDetails } from './credit-card-details/credit-card-details';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgIf, NgFor], 
+  imports: [NgIf, NgFor, CreditCardDetails], 
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -17,6 +18,8 @@ export class Home {
 
   cards = signal<CreditCard[]>([]); // array for cards
   loading = signal(true); 
+  isModalOpen = signal(false);
+  selectedCard = signal<CreditCard | null>(null); 
 
   constructor() {
     const isReady = computed(() => this.login.ready()); // noget fis for at undgå at køre 2 gange
@@ -37,5 +40,21 @@ export class Home {
         },
       });
     });
+  }
+
+  openModal(card: CreditCard) {
+    this.selectedCard.set(card);
+    this.isModalOpen.set(true);
+  }
+
+  closeModal() {
+    this.isModalOpen.set(false);
+    this.selectedCard.set(null);
+  }
+
+  onCardDeleted(cardNumber: string) {
+    const currentCards = this.cards();
+    const updatedCards = currentCards.filter(card => String(card.cardNumber) !== cardNumber);
+    this.cards.set(updatedCards);
   }
 }

@@ -8,6 +8,7 @@ import {CreateCreditCardModal} from './create-credit-card-modal/create-credit-ca
   imports: [
     MatIconModule
   ],
+  standalone: true,
   templateUrl: './credit-card-creator.html',
   styleUrl: './credit-card-creator.css'
 })
