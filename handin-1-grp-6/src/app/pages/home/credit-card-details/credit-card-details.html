@@ -1,13 +1,85 @@
-<div *ngIf="isOpen" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center" (click)="onClick($event)">
-  <div class="bg-white rounded-xl shadow-lg max-w-md w-full mx-4 p-6" (click)="$event.stopPropagation()">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-semibold text-gray-900">Penis</h2>
+<div *ngIf="isOpen" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50" (click)="onClick($event)">
+  <div class="bg-white rounded-xl shadow-lg max-w-lg w-full mx-4 p-6" (click)="$event.stopPropagation()">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-semibold text-gray-900">Credit Card Details</h2>
+      <button (click)="onClose()" class="text-gray-400 hover:text-gray-600 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
 
-    <p class="text-gray-700 mb-6">Card Details</p>
+    <div *ngIf="card" class="space-y-4">
+      <!-- Credit Card Visual -->
+      <div class="bg-gradient-to-r from-gray-700 to-gray-900 rounded-lg p-6 text-white mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <img class="h-8" src="https://static.vecteezy.com/system/resources/previews/016/774/595/non_2x/3d-bank-icon-illustration-on-transparent-background-free-png.png" alt="Bank logo">
+          <span class="font-medium">{{ card.issuer }}</span>
+        </div>
+        <div class="mb-4">
+          <div class="text-lg font-mono tracking-wider">{{ card.cardNumber }}</div>
+        </div>
+        <div class="flex justify-between items-end">
+          <div>
+            <div class="text-xs opacity-75 mb-1">CARDHOLDER NAME</div>
+            <div class="font-medium">{{ card.cardHolderName }}</div>
+          </div>
+          <div class="text-right">
+            <div class="text-xs opacity-75 mb-1">EXPIRES</div>
+            <div class="font-medium">{{ card.expirationDateMonth }}/{{ card.expirationDateYear }}</div>
+          </div>
+          <img class="h-8" src="https://download.logo.wine/logo/Mastercard/Mastercard-Logo.wine.png" alt="Mastercard logo">
+        </div>
+      </div>
 
-    <div class="flex justify-end">
-      <button (click)="onClose()" class="">Close</button>
+      <!-- Card Details -->
+      <div class="grid grid-cols-1 gap-4">
+        <div class="border-b pb-3">
+          <label class="block text-sm font-medium text-gray-600 mb-1">Card Number</label>
+          <div class="text-lg font-mono text-gray-900">{{ card.cardNumber }}</div>
+        </div>
+        
+        <div class="border-b pb-3">
+          <label class="block text-sm font-medium text-gray-600 mb-1">Cardholder Name</label>
+          <div class="text-lg text-gray-900">{{ card.cardHolderName }}</div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div class="border-b pb-3">
+            <label class="block text-sm font-medium text-gray-600 mb-1">CVV Code</label>
+            <div class="text-lg font-mono text-gray-900">{{ card.cscCode }}</div>
+          </div>
+          <div class="border-b pb-3">
+            <label class="block text-sm font-medium text-gray-600 mb-1">Issuer</label>
+            <div class="text-lg text-gray-900">{{ card.issuer }}</div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div class="border-b pb-3">
+            <label class="block text-sm font-medium text-gray-600 mb-1">Expiry Month</label>
+            <div class="text-lg text-gray-900">{{ card.expirationDateMonth }}</div>
+          </div>
+          <div class="border-b pb-3">
+            <label class="block text-sm font-medium text-gray-600 mb-1">Expiry Year</label>
+            <div class="text-lg text-gray-900">{{ card.expirationDateYear }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-between items-center mt-8 pt-4 border-t">
+      <button 
+        (click)="onDeleteCard()" 
+        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+        Delete Card
+      </button>
+      <button 
+        (click)="onClose()" 
+        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+        Close
+      </button>
     </div>
   </div>
 </div>

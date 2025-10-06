@@ -18,7 +18,8 @@ export class Home {
 
   cards = signal<CreditCard[]>([]); // array for cards
   loading = signal(true); 
-  isModalOpen = signal(false); 
+  isModalOpen = signal(false);
+  selectedCard = signal<CreditCard | null>(null); 
 
   constructor() {
     const isReady = computed(() => this.login.ready()); // noget fis for at undgå at køre 2 gange
@@ -41,11 +42,20 @@ export class Home {
     });
   }
 
-  openModal() {
+  openModal(card: CreditCard) {
+    this.selectedCard.set(card);
     this.isModalOpen.set(true);
   }
 
   closeModal() {
     this.isModalOpen.set(false);
+    this.selectedCard.set(null);
+  }
+
+  onCardDeleted(cardNumber: string) {
+    // Remove the deleted card from the cards array
+    const currentCards = this.cards();
+    const updatedCards = currentCards.filter(card => card.cardNumber !== cardNumber);
+    this.cards.set(updatedCards);
   }
 }

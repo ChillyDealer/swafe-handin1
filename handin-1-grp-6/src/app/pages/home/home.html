@@ -7,8 +7,8 @@
 <ul *ngIf="!loading()" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
   <li *ngFor="let card of cards()" class="mx-4 max-w-lg mt-4">
     <div
-      class="bg-gray-800 rounded-lg overflow-hidden cursor-pointer transition-colors"
-      (click)="openModal()"
+      class="bg-gray-800 rounded-lg overflow-hidden cursor-pointer transition-colors hover:bg-gray-700"
+      (click)="openModal(card)"
     >
       <div class="px-6 py-4">
         <div class="flex justify-between items-center">
@@ -41,5 +41,7 @@
 
 <app-credit-card-details
   [isOpen]="isModalOpen()"
+  [card]="selectedCard()"
   (closeModal)="closeModal()"
+  (cardDeleted)="onCardDeleted($event)"
 ></app-credit-card-details>
