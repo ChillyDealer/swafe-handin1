@@ -69,6 +69,14 @@
     <br />
     <p class="text-white">Comment: {{ transaction.comment }}</p>
     <br />
+    <div class="flex justify-end">
+      <button
+        class="bg-red-500 text-white px-4 py-2 rounded-lg"
+        (click)="deleteTransaction(transaction)"
+      >
+        Delete
+      </button>
+    </div>
   </div>
   }
 </div>

@@ -96,4 +96,10 @@ export class TransactionHistory {
       this.closeDropdown();
     }
   }
+
+  deleteTransaction(transaction: any) {
+    if (confirm(`Are you sure you want to delete this transaction of $${transaction.amount}?`)) {
+      this.transactionService.deleteTransaction(transaction.uid);
+    }
+  }
 }
