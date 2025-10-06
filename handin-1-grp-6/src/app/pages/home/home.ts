@@ -53,9 +53,8 @@ export class Home {
   }
 
   onCardDeleted(cardNumber: string) {
-    // Remove the deleted card from the cards array
     const currentCards = this.cards();
-    const updatedCards = currentCards.filter(card => card.cardNumber !== cardNumber);
+    const updatedCards = currentCards.filter(card => String(card.cardNumber) !== cardNumber);
     this.cards.set(updatedCards);
   }
 }

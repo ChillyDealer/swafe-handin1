@@ -11,7 +11,7 @@ import { CreditCard } from '../../../Models/CreditCard';
 })
 export class CreditCardDetails {
   private http = inject(HttpClient);
-  
+
   @Input() isOpen: boolean = false;
   @Input() card: CreditCard | null = null;
   @Output() closeModal = new EventEmitter<void>();
@@ -38,8 +38,8 @@ export class CreditCardDetails {
             this.onClose();
           },
           error: (err) => {
-            console.error('Error deleting credit card:', err);
-            // You might want to show an error message to the user
+            console.error('Error:', err);
+            alert('Failed to delete...');
           }
         });
     }
