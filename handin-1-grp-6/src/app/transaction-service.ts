@@ -17,7 +17,6 @@ export class TransactionService {
     effect(() => {
       if (isReady()) {
         this.fetchTransactions();
-        console.log(this.transactions());
       }
     })
   }
@@ -29,7 +28,6 @@ export class TransactionService {
   protected fetchTransactions() {
     this.http.get<Transaction[]>(this.baseUrl).subscribe(transactions => {
       this.transactions.set(transactions);
-      console.log(this.transactions());
     });
   }
 }

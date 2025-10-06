@@ -7,18 +7,20 @@
     "comment": "" 
     -->
 
-<div style="flex-wrap: wrap; display: flex; gap: 10px; justify-content: center">
+<div>Input field for search</div>
+
+<div class="flex flex-wrap gap-2.5 justify-center">
   @for (transaction of transactions(); track $index) {
-  <div style="box-sizing: border-box; border: 1px solid #ccc; padding: 10px">
-    <p style="font-weight: bold">Card Number: {{ transaction.cardNumber }}</p>
+  <div class="bg-gray-800 rounded-lg overflow-hidden p-6 w-80 min-w-fit">
+    <p class="text-white">Card Number: {{ transaction.cardNumber }}</p>
     <br />
-    <p style="font-weight: bold">Transaction Date: {{ transaction.transactionDate }}</p>
+    <p class="text-white">Transaction Date: {{ transaction.transactionDate }}</p>
     <br />
-    <p style="font-weight: bold">Transaction Amount: ${{ transaction.amount }}</p>
+    <p class="text-white">Transaction Amount: ${{ transaction.amount }}</p>
     <br />
-    <p style="font-weight: bold">Currency Code: {{ transaction.currencyCode }}</p>
+    <p class="text-white">Currency Code: {{ transaction.currencyCode }}</p>
     <br />
-    <p style="font-weight: bold">Comment: {{ transaction.comment }}</p>
+    <p class="text-white">Comment: {{ transaction.comment }}</p>
     <br />
   </div>
   }
