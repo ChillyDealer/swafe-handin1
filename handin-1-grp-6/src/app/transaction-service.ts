@@ -1,4 +1,4 @@
-import { computed, effect, inject, Injectable } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { CreditCard } from './Models/CreditCard';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from './login-service';
@@ -7,7 +7,7 @@ import { LoginService } from './login-service';
   providedIn: 'root'
 })
 export class TransactionService {
-  protected transactions: Transaction[] = [];
+  protected transactions = signal<Transaction[]>([]);
   private http = inject(HttpClient);
   private login = inject(LoginService);
   private baseUrl = 'https://assignment1.swafe.dk/api/Transaction';
@@ -17,7 +17,7 @@ export class TransactionService {
     effect(() => {
       if (isReady()) {
         this.fetchTransactions();
-        console.log(this.transactions);
+        console.log(this.transactions());
       }
     })
   }
@@ -28,8 +28,8 @@ export class TransactionService {
 
   protected fetchTransactions() {
     this.http.get<Transaction[]>(this.baseUrl).subscribe(transactions => {
-      this.transactions = transactions;
-      console.log(this.transactions);
+      this.transactions.set(transactions);
+      console.log(this.transactions());
     });
   }
 }
@@ -37,10 +37,10 @@ export class TransactionService {
 
 export interface Transaction {
   // credit_card, amount, currency, comment, date
-  credit_card: CreditCard;
+  // credit_card: CreditCard;
+  cardNumber: string;
   amount: number;
-  currency: string;
+  currencyCode: string;
   comment: string;
-  date: string;
-
+  transactionDate: string;
 }

@@ -1,7 +1,25 @@
-<h2>Transactions for (Credit card here)</h2>
+<!--     
+    "uid": "1e71fb5f-af44-490e-b765-abd9c24e7828",
+    "cardNumber": 4263982640269299,
+    "amount": 336.63486000379874,
+    "currencyCode": "EUR",
+    "transactionDate": "2021-09-27T15:06:17.923",
+    "comment": "" 
+    -->
 
-@for (transaction of transactions; track $index) {
-<div>
-  <p>{{ transaction.date }} - {{ transaction.comment }} - ${{ transaction.amount }}</p>
+<div style="flex-wrap: wrap; display: flex; gap: 10px; justify-content: center">
+  @for (transaction of transactions(); track $index) {
+  <div style="box-sizing: border-box; border: 1px solid #ccc; padding: 10px">
+    <p style="font-weight: bold">Card Number: {{ transaction.cardNumber }}</p>
+    <br />
+    <p style="font-weight: bold">Transaction Date: {{ transaction.transactionDate }}</p>
+    <br />
+    <p style="font-weight: bold">Transaction Amount: ${{ transaction.amount }}</p>
+    <br />
+    <p style="font-weight: bold">Currency Code: {{ transaction.currencyCode }}</p>
+    <br />
+    <p style="font-weight: bold">Comment: {{ transaction.comment }}</p>
+    <br />
+  </div>
+  }
 </div>
-}
