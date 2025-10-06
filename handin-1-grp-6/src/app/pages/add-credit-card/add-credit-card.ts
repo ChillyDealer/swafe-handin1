@@ -3,6 +3,7 @@ import {CreditCardCreator} from './credit-card-creator/credit-card-creator';
 
 @Component({
   selector: 'app-add-credit-card',
+  standalone: true,
   imports: [
     CreditCardCreator
   ],
