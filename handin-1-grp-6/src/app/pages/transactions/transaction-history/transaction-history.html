@@ -1,10 +1,5 @@
 <div class="justify-self-center -mt-12 mb-8">
-  <input
-    id="card-filter"
-    type="text"
-    class="text-lg text-center border-x-2 border-y-2"
-    placeholder="Filter cards"
-  />
+  <app-combo-box />
 </div>
 <div class="flex flex-wrap gap-2.5 justify-center">
   @for (transaction of transactions(); track $index) {
