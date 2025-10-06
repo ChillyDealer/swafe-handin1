@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { TransactionService } from '../../../transaction-service';
+import { ComboBox } from "../../../combo-box/combo-box";
 
 @Component({
   selector: 'app-transaction-history',
-  imports: [],
+  imports: [ComboBox],
   templateUrl: './transaction-history.html',
   styleUrl: './transaction-history.css'
 })
