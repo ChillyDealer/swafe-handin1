@@ -1,7 +1,24 @@
-<h2>Transactions for (Credit card here)</h2>
-
-@for (transaction of transactions; track $index) {
-<div>
-  <p>{{ transaction.date }} - {{ transaction.comment }} - ${{ transaction.amount }}</p>
+<div class="justify-self-center -mt-12 mb-8">
+  <input
+    id="card-filter"
+    type="text"
+    class="text-lg text-center border-x-2 border-y-2"
+    placeholder="Filter cards"
+  />
 </div>
-}
+<div class="flex flex-wrap gap-2.5 justify-center">
+  @for (transaction of transactions(); track $index) {
+  <div class="bg-gray-800 rounded-lg overflow-hidden p-6 w-80 min-w-fit">
+    <p class="text-white">Card Number: {{ transaction.cardNumber }}</p>
+    <br />
+    <p class="text-white">Transaction Date: {{ transaction.transactionDate }}</p>
+    <br />
+    <p class="text-white">Transaction Amount: ${{ transaction.amount }}</p>
+    <br />
+    <p class="text-white">Currency Code: {{ transaction.currencyCode }}</p>
+    <br />
+    <p class="text-white">Comment: {{ transaction.comment }}</p>
+    <br />
+  </div>
+  }
+</div>
