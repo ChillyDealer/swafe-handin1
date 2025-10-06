@@ -2,12 +2,12 @@
   <div class="relative">
     <input
       type="text"
-      class="w-full px-4 py-2 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none bg-white cursor-pointer"
-      [value]="getDisplayText()"
+      class="w-full px-4 py-2 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none bg-white"
+      [value]="getInputValue()"
       (input)="onFilterInput($event)"
       (click)="toggleDropdown()"
+      (focus)="onInputFocus()"
       placeholder="Search or select a card number..."
-      readonly
     />
 
     <div

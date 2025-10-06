@@ -65,7 +65,22 @@ export class TransactionHistory {
   onFilterInput(event: Event) {
     const target = event.target as HTMLInputElement;
     this.filterText.set(target.value);
+    this.selectedCardNumber.set(null); // Clear selectionen
     this.isDropdownOpen.set(true);
+  }
+  
+  onInputFocus() {
+    this.isDropdownOpen.set(true);
+  }
+  
+  getInputValue(): string {
+    if (this.filterText()) {
+      return this.filterText();
+    }
+    if (this.selectedCardNumber()) {
+      return `Card: ${this.selectedCardNumber()}`;
+    }
+    return '';
   }
   
   getDisplayText(): string {
