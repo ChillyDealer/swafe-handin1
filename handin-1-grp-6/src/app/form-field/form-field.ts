@@ -1,25 +1,47 @@
-import {Component, Input} from '@angular/core';
-import {ControlValueAccessor} from '@angular/forms';
+import { Component, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'; // <-- Import CommonModule
 
 @Component({
   selector: 'app-form-field',
-  imports: [],
-  templateUrl: './form-field.html',
-  styleUrl: './form-field.css'
+  standalone: true, // <-- This tells us it's a standalone component
+  imports: [
+    CommonModule,  // <-- Add CommonModule here
+    FormsModule    // <-- Add FormsModule for ngModel
+  ],
+  templateUrl: './form-field.html', // The name in your code was form-field.html
+  styleUrl: './form-field.css',     // The name in your code was form-field.css
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => FormField), // Use the correct class name
+      multi: true
+    }
+  ]
 })
-export class FormField implements ControlValueAccessor{
-  @Input({required: true}) label!: string;
+export class FormField implements ControlValueAccessor {
+  @Input({ required: true }) label!: string;
 
-  writeValue(obj: any): void {
-      throw new Error("Method not implemented.");
+  // --- Implementation for ControlValueAccessor ---
+  value: any = '';
+  onChange: (value: any) => void = () => {};
+  onTouched: () => void = () => {};
+
+  writeValue(value: any): void {
+    this.value = value;
   }
+
   registerOnChange(fn: any): void {
-      throw new Error("Method not implemented.");
+    this.onChange = fn;
   }
+
   registerOnTouched(fn: any): void {
-      throw new Error("Method not implemented.");
+    this.onTouched = fn;
   }
-  setDisabledState?(isDisabled: boolean): void {
-      throw new Error("Method not implemented.");
+
+  onInputChange(newValue: any) {
+    this.value = newValue;
+    this.onChange(this.value);
+    this.onTouched();
   }
 }

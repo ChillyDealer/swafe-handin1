@@ -1,15 +1,63 @@
 <div class="flex flex-col p-4 gap-4">
   <h3 class="text-lg text-center">Add credit card</h3>
   <form class="flex flex-col gap-4" #creditCardForm="ngForm" (ngSubmit)="onSubmit(creditCardForm)">
-    <app-form-field label="Card number" />
-    <app-form-field label="Cardholder name"/>
-    <app-form-field label="Security code"/>
-    <app-form-field label="Expiration month"/>
-    <app-form-field label="Expiration year"/>
-    <app-form-field label="Issuer"/>
+    <div class="flex flex-col">
+      <label class="text-sm text-gray-400">Card number</label>
+      <input
+        class="bg-gray-200 p-2 rounded-md"
+        name="cardNumber"
+        type="text"
+        [ngModel]="creditCardInput.cardNumber"
+      >
+    </div>
+    <div class="flex flex-col">
+      <label class="text-sm text-gray-400">Card holder name</label>
+      <input
+        class="bg-gray-200 p-2 rounded-md"
+        name="cardHolderName"
+        type="text"
+        [ngModel]="creditCardInput.cardHolderName"
+      >
+    </div>
+    <div class="flex flex-col">
+      <label class="text-sm text-gray-400">Security code</label>
+      <input
+        class="bg-gray-200 p-2 rounded-md"
+        name="cscCode"
+        type="text"
+        [ngModel]="creditCardInput.cscCode"
+      >
+    </div>
+    <div class="flex flex-col">
+      <label class="text-sm text-gray-400">Expiration month</label>
+      <input
+        class="bg-gray-200 p-2 rounded-md"
+        name="expirationDateMonth"
+        type="text"
+        [ngModel]="creditCardInput.expirationDateMonth"
+      >
+    </div>
+    <div class="flex flex-col">
+      <label class="text-sm text-gray-400">Expiration year</label>
+      <input
+        class="bg-gray-200 p-2 rounded-md"
+        name="expirationDateYear"
+        type="text"
+        [ngModel]="creditCardInput.expirationDateYear"
+      >
+    </div>
+    <div class="flex flex-col">
+      <label class="text-sm text-gray-400">Issuer</label>
+      <input
+        class="bg-gray-200 p-2 rounded-md"
+        name="issuer"
+        type="text"
+        [ngModel]="creditCardInput.issuer"
+      >
+    </div>
     <div class="flex justify-evenly gap-4 mt-8">
-      <button class="bg-red-400 text-gray-50 rounded-md p-2 w-28">Cancel</button>
-      <input class="border-2 bg-gray-50 border-blue-900 text-blue-900 rounded-md p-2 w-28" type="submit">
+      <button type="button" class="bg-red-400 text-gray-50 rounded-md p-2 w-28" (click)="onCancel()">Cancel</button>
+      <input type="submit" class="border-2 bg-gray-50 border-blue-900 text-blue-900 rounded-md p-2 w-28">
     </div>
   </form>
 </div>
