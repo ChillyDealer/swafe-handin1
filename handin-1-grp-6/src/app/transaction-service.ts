@@ -30,12 +30,24 @@ export class TransactionService {
       this.transactions.set(transactions);
     });
   }
+
+  deleteTransaction(transactionId: string) {
+    return this.http.delete(`${this.baseUrl}/uid?uid=${transactionId}`).subscribe({
+      next: () => {
+        const currentTransactions = this.transactions();
+        const updatedTransactions = currentTransactions.filter(t => t.uid !== transactionId);
+        this.transactions.set(updatedTransactions);
+      },
+      error: (err) => {
+        console.error('Failed to delete transaction:', err);
+      }
+    });
+  }
 }
 
 
 export interface Transaction {
-  // credit_card, amount, currency, comment, date
-  // credit_card: CreditCard;
+  uid: string;
   cardNumber: string;
   amount: number;
   currencyCode: string;
