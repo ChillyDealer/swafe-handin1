@@ -6,7 +6,10 @@
       <input
         class="bg-gray-200 p-2 rounded-md"
         name="cardNumber"
-        type="text"
+        type="number"
+        required
+        minlength="7"
+        maxlength="16"
         [ngModel]="creditCardInput.cardNumber"
       >
     </div>
@@ -24,7 +27,7 @@
       <input
         class="bg-gray-200 p-2 rounded-md"
         name="cscCode"
-        type="text"
+        type="number"
         [ngModel]="creditCardInput.cscCode"
       >
     </div>
@@ -33,7 +36,7 @@
       <input
         class="bg-gray-200 p-2 rounded-md"
         name="expirationDateMonth"
-        type="text"
+        type="number"
         [ngModel]="creditCardInput.expirationDateMonth"
       >
     </div>
@@ -42,7 +45,7 @@
       <input
         class="bg-gray-200 p-2 rounded-md"
         name="expirationDateYear"
-        type="text"
+        type="number"
         [ngModel]="creditCardInput.expirationDateYear"
       >
     </div>
@@ -57,7 +60,7 @@
     </div>
     <div class="flex justify-evenly gap-4 mt-8">
       <button type="button" class="bg-red-400 text-gray-50 rounded-md p-2 w-28" (click)="onCancel()">Cancel</button>
-      <input type="submit" class="border-2 bg-gray-50 border-blue-900 text-blue-900 rounded-md p-2 w-28">
+      <input type="submit" [disabled]="creditCardForm.invalid" class="border-2 bg-gray-50 border-blue-900 text-blue-900 rounded-md p-2 w-28 cursor-pointer disabled:cursor-default">
     </div>
   </form>
 </div>

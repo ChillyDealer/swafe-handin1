@@ -10,6 +10,6 @@ export class CreditCardService {
   private baseUrl = 'https://assignment1.swafe.dk/api';
 
   public postCreditCard(creditCard: CreditCard) {
-    this.http.post(`${this.baseUrl}/CreditCard`, creditCard);
+    return this.http.post(`${this.baseUrl}/CreditCard`, creditCard);
   }
 }

@@ -35,7 +35,10 @@ export class CreateCreditCardModal {
       return;
     }
 
-    this.creditCardService.postCreditCard(form.value)
+    this.creditCardService.postCreditCard(form.value).subscribe({
+      next: (response) => console.log("💳 Credit card posted successfully!", response),
+      error: (error) => console.warn("🙈 Error posting credit card", error)
+    })
   }
 
   onCancel() {
