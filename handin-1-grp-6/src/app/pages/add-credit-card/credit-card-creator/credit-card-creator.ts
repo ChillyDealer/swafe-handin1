@@ -10,7 +10,6 @@ import {CreateCreditCardModal} from './create-credit-card-modal/create-credit-ca
   ],
   standalone: true,
   templateUrl: './credit-card-creator.html',
-  styleUrl: './credit-card-creator.css'
 })
 export class CreditCardCreator {
   constructor(public dialog: MatDialog) {

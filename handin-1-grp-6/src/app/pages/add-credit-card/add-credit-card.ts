@@ -8,7 +8,6 @@ import {CreditCardCreator} from './credit-card-creator/credit-card-creator';
     CreditCardCreator
   ],
   templateUrl: './add-credit-card.html',
-  styleUrl: './add-credit-card.css'
 })
 export class AddCreditCard {
 
