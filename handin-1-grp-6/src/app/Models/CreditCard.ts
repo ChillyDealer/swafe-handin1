@@ -1,8 +1,8 @@
 export interface CreditCard {
-  cardNumber: string;
+  cardNumber: number;
   cardHolderName: string;
-  cscCode: string;
-  expirationMonth: string;
-  expirationYear: string;
+  cscCode: number;
+  expirationDateMonth: number;
+  expirationDateYear: number;
   issuer: string;
 }
