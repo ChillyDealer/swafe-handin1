@@ -1,7 +1,7 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { CreditCard } from './Models/CreditCard';
-import { HttpClient } from '@angular/common/http';
-import { LoginService } from './login-service';
+import {computed, effect, inject, Injectable, signal} from '@angular/core';
+import {CreditCard} from './Models/CreditCard';
+import {HttpClient} from '@angular/common/http';
+import {LoginService} from './login-service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,11 @@ export class TransactionService {
     });
   }
 
+  public postTransaction(transaction: Transaction) {
+    this.login.ready(); // Just calls login
+    return this.http.post(this.baseUrl, transaction);
+  }
+
   deleteTransaction(transactionId: string) {
     return this.http.delete(`${this.baseUrl}/uid?uid=${transactionId}`).subscribe({
       next: () => {
@@ -48,7 +53,7 @@ export class TransactionService {
 
 export interface Transaction {
   uid: string;
-  cardNumber: string;
+  cardNumber: number;
   amount: number;
   currencyCode: string;
   comment: string;
