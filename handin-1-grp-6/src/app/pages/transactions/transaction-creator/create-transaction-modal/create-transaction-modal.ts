@@ -23,9 +23,8 @@ export class CreateTransactionModal implements OnInit {
 
   ngOnInit() {
     this.transactionForm = this.fb.group({
-      cardNumber: [1234567, [
-        // Validators.required,
-        // Validators.pattern(/^\d{7,16}$/)
+      cardNumber: ["", [
+        Validators.required,
       ]],
       amount: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       currencyCode: ['', [
@@ -37,6 +36,8 @@ export class CreateTransactionModal implements OnInit {
       ]],
     });
   }
+
+  protected transactions = this.transactionService.GetTransactions;
 
   protected get cardNumber() {
     return this.transactionForm.get('cardNumber')!;
@@ -56,6 +57,10 @@ export class CreateTransactionModal implements OnInit {
 
   protected get transactionDate() {
     return this.transactionForm.get('transactionDate')!;
+  }
+
+  protected setCardNumber(value: number | null) {
+    this.transactionForm.patchValue({cardNumber: value});
   }
 
   protected onSubmit() {
