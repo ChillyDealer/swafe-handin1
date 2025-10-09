@@ -2,10 +2,12 @@ import { Component, Input, Output, EventEmitter, inject, OnChanges, OnDestroy } 
 import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { CreditCard } from '../../../Models/CreditCard';
+import { ExpirationDatePipe } from '../../../pipes/expiration-date.pipe';
 
 @Component({
   selector: 'app-credit-card-details',
-  imports: [NgIf],
+  standalone: true,
+  imports: [NgIf, ExpirationDatePipe],
   templateUrl: './credit-card-details.html',
   styleUrl: './credit-card-details.css'
 })

@@ -35,12 +35,12 @@
           <label class="block text-sm font-medium text-gray-600 mb-1">Card Number</label>
           <div class="text-lg text-gray-900">{{ card.cardNumber }}</div>
         </div>
-        
+
         <div class="border-b pb-3">
           <label class="block text-sm font-medium text-gray-600 mb-1">Cardholder Name</label>
           <div class="text-lg text-gray-900">{{ card.cardHolderName }}</div>
         </div>
-        
+
         <div class="grid grid-cols-2 gap-4">
           <div class="border-b pb-3">
             <label class="block text-sm font-medium text-gray-600 mb-1">CVV Code</label>
@@ -52,37 +52,22 @@
           </div>
         </div>
         
-        <div class="grid grid-cols-2 gap-4">
-          <div class="border-b pb-3">
-            <label class="block text-sm font-medium text-gray-600 mb-1">Expiry Month</label>
-            <div class="text-lg text-gray-900">{{ card.expirationMonth }}</div>
-          </div>
-          <div class="border-b pb-3">
-            <label class="block text-sm font-medium text-gray-600 mb-1">Expiry Year</label>
-            <div class="text-lg text-gray-900">{{ card.expirationYear }}</div>
-          </div>
+        <div class="border-b pb-3">
+          <label class="block text-sm font-medium text-gray-600 mb-1">Expiration Date</label>
+          <div class="text-lg text-gray-900">{{ card.expirationMonth | expirationDate:card.expirationYear }}</div>
         </div>
       </div>
-    <div>
-        <h1>idk pepe</h1>
-        <h1>idk pepe</h1>
-        <h1>idk pepe</h1>
-        <h1>idk pepe</h1>
-        <h1>idk pepe</h1>
-        <h1>idk pepe</h1>
-        <h1>idk pepe</h1>
-    </div>
     </div>
 
 
     <div class="flex justify-between items-center mt-8 pt-4 border-t">
-      <button 
-        (click)="onDeleteCard()" 
+      <button
+        (click)="onDeleteCard()"
         class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
         Delete Card
       </button>
-      <button 
-        (click)="onClose()" 
+      <button
+        (click)="onClose()"
         class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
         Close
       </button>
