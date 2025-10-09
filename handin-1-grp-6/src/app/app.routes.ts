@@ -6,6 +6,6 @@ import { Transactions } from './pages/transactions/transactions';
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'add-card', component: AddCreditCard },
-  { path: 'transactions', component: Transactions },
+  { path: 'transactions', loadComponent: () => import('./pages/transactions/transactions').then(m => m.Transactions) },
   { path: '**', redirectTo: '' }
 ];
