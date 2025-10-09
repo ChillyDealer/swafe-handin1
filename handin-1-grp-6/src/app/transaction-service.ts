@@ -1,7 +1,7 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { CreditCard } from './Models/CreditCard';
-import { HttpClient } from '@angular/common/http';
-import { LoginService } from './login-service';
+import {computed, effect, inject, Injectable, signal} from '@angular/core';
+import {CreditCard} from './Models/CreditCard';
+import {HttpClient} from '@angular/common/http';
+import {LoginService} from './login-service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,9 @@ export class TransactionService {
   private http = inject(HttpClient);
   private login = inject(LoginService);
   private baseUrl = 'https://assignment1.swafe.dk/api/Transaction';
-  
+
   // Shared filtering state
-  selectedCardNumber = signal<string | null>(null);
+  selectedCardNumber = signal<number | null>(null);
 
   constructor() {
     const isReady = computed(() => this.login.ready());
@@ -34,7 +34,7 @@ export class TransactionService {
       if (!selectedCard) {
         return this.transactions();
       }
-      return this.transactions().filter(transaction => 
+      return this.transactions().filter(transaction =>
         transaction.cardNumber === selectedCard
       );
     });
@@ -47,7 +47,7 @@ export class TransactionService {
     });
   }
 
-  setSelectedCardNumber(cardNumber: string | null) {
+  setSelectedCardNumber(cardNumber: number | null) {
     this.selectedCardNumber.set(cardNumber);
   }
 
@@ -55,6 +55,11 @@ export class TransactionService {
     this.http.get<Transaction[]>(this.baseUrl).subscribe(transactions => {
       this.transactions.set(transactions);
     });
+  }
+
+  public postTransaction(transaction: Transaction) {
+    this.login.ready(); // Just calls login
+    return this.http.post(this.baseUrl, transaction);
   }
 
   deleteTransaction(transactionId: string) {
@@ -74,7 +79,7 @@ export class TransactionService {
 
 export interface Transaction {
   uid: string;
-  cardNumber: string;
+  cardNumber: number;
   amount: number;
   currencyCode: string;
   comment: string;
