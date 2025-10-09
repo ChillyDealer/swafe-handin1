@@ -3,51 +3,59 @@
   <form class="flex flex-col gap-4" [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
     <div class="flex flex-col">
       <label class="text-sm text-gray-400">Credit card *</label>
-      <app-combobox />
+      <app-combobox [transactions]="transactions()" (selectedCardChange)="setCardNumber($event)" class="mb-[-30px] mt-12"/>
+      @if (cardNumber.invalid && (cardNumber.dirty || cardNumber.touched)) {
+        <div class="text-red-400 text-sm mt-1">
+          @if (cardNumber.errors?.['required']) {
+            <p>Card number is required.</p>
+          }
+        </div>
+      }
     </div>
 
     <div class="flex flex-col">
       <label class="text-sm text-gray-400">Amount *</label>
-      <input class="bg-gray-200 p-2 rounded-md" type="number" formControlName="amount" />
+      <input class="bg-gray-200 p-2 rounded-md" type="number" formControlName="amount"/>
       @if (amount.invalid && (amount.dirty || amount.touched)) {
-      <div class="text-red-400 text-sm mt-1">
-        @if (amount.errors?.['required']) {
-        <p>Amount is required.</p>
-        } @if (amount.errors?.['pattern']) {
-        <p>Amount must be a number.</p>
-        }
-      </div>
+        <div class="text-red-400 text-sm mt-1">
+          @if (amount.errors?.['required']) {
+            <p>Amount is required.</p>
+          }
+          @if (amount.errors?.['pattern']) {
+            <p>Amount must be a number.</p>
+          }
+        </div>
       }
     </div>
 
     <div class="flex flex-col">
       <label class="text-sm text-gray-400">Currency *</label>
-      <input class="bg-gray-200 p-2 rounded-md" type="text" formControlName="currencyCode" />
+      <input class="bg-gray-200 p-2 rounded-md" type="text" formControlName="currencyCode"/>
 
       @if (currencyCode.invalid && (currencyCode.dirty || currencyCode.touched)) {
-      <div class="text-red-400 text-sm mt-1">
-        @if (currencyCode.errors?.['required']) {
-        <p>Currency is required.</p>
-        }
-      </div>
+        <div class="text-red-400 text-sm mt-1">
+          @if (currencyCode.errors?.['required']) {
+            <p>Currency is required.</p>
+          }
+        </div>
       }
     </div>
 
     <div class="flex flex-col">
       <label class="text-sm text-gray-400">Comment</label>
-      <input class="bg-gray-200 p-2 rounded-md" type="text" formControlName="comment" />
+      <input class="bg-gray-200 p-2 rounded-md" type="text" formControlName="comment"/>
     </div>
 
     <div class="flex flex-col">
       <label class="text-sm text-gray-400">Date *</label>
-      <input class="bg-gray-200 p-2 rounded-md" type="date" formControlName="transactionDate" />
+      <input class="bg-gray-200 p-2 rounded-md" type="date" formControlName="transactionDate"/>
 
       @if (transactionDate.invalid && (transactionDate.dirty || transactionDate.touched)) {
-      <div class="text-red-400 text-sm mt-1">
-        @if (transactionDate.errors?.['required']) {
-        <p>Date is required.</p>
-        }
-      </div>
+        <div class="text-red-400 text-sm mt-1">
+          @if (transactionDate.errors?.['required']) {
+            <p>Date is required.</p>
+          }
+        </div>
       }
     </div>
 
