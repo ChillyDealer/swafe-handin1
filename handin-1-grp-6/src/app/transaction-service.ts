@@ -12,9 +12,6 @@ export class TransactionService {
   private login = inject(LoginService);
   private baseUrl = 'https://assignment1.swafe.dk/api/Transaction';
 
-  // Shared filtering state
-  selectedCardNumber = signal<number | null>(null);
-
   constructor() {
     const isReady = computed(() => this.login.ready());
     effect(() => {
@@ -26,29 +23,6 @@ export class TransactionService {
 
   get GetTransactions() {
     return this.transactions;
-  }
-
-  get GetFilteredTransactions() {
-    return computed(() => {
-      const selectedCard = this.selectedCardNumber();
-      if (!selectedCard) {
-        return this.transactions();
-      }
-      return this.transactions().filter(transaction =>
-        transaction.cardNumber === selectedCard
-      );
-    });
-  }
-
-  get GetAvailableCardNumbers() {
-    return computed(() => {
-      const cardNumbers = this.transactions().map(t => t.cardNumber);
-      return [...new Set(cardNumbers)].sort();
-    });
-  }
-
-  setSelectedCardNumber(cardNumber: number | null) {
-    this.selectedCardNumber.set(cardNumber);
   }
 
   protected fetchTransactions() {

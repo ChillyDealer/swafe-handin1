@@ -42,16 +42,16 @@
     </div>
 
     <div
-      *ngFor="let cardNumber of filteredCardNumbers()"
+      *ngFor="let option of filteredCardOptions()"
       class="px-4 py-2 cursor-pointer hover:bg-blue-50 transition-colors duration-150"
-      [class.bg-blue-500]="cardNumber === selectedCardNumber()"
-      [class.text-white]="cardNumber === selectedCardNumber()"
-      (click)="selectCard(cardNumber)"
+      [class.bg-blue-500]="option.value === selectedCardNumber()"
+      [class.text-white]="option.value === selectedCardNumber()"
+      (click)="selectCard(option.value)"
     >
-      Card: {{ cardNumber }}
+      {{ option.label }}
     </div>
 
-    <div *ngIf="filteredCardNumbers().length === 0" class="px-4 py-2 text-gray-500 italic">
+    <div *ngIf="filteredCardOptions().length === 0" class="px-4 py-2 text-gray-500 italic">
       No card numbers found
     </div>
   </div>

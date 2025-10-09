@@ -1,6 +1,12 @@
-import { Component, computed, ElementRef, HostListener, inject, signal } from '@angular/core';
-import { TransactionService } from '../transaction-service';
+import { Component, computed, ElementRef, HostListener, inject, signal, output, input, effect } from '@angular/core';
+import { TransactionService, Transaction } from '../transaction-service';
 import { CommonModule } from '@angular/common';
+
+export interface ComboboxOption {
+  value: number;
+  label: string;
+}
+
 @Component({
   selector: 'app-combobox',
   imports: [CommonModule],
@@ -8,27 +14,42 @@ import { CommonModule } from '@angular/common';
   styleUrl: './combobox.css'
 })
 export class Combobox {
-  transactionService = inject(TransactionService);
+  private transactionService = inject(TransactionService);
   elementRef = inject(ElementRef);
-  transactions = this.transactionService.GetTransactions;
 
+  // transactions prop
+  transactions = input<Transaction[]>([]);
+
+  // output til listen
+  selectedCardChange = output<number | null>();
+
+  // Internal state (kig væk)
   isDropdownOpen = signal(false);
-  selectedCardNumber = this.transactionService.selectedCardNumber;
+  selectedCardNumber = signal<number | null>(null);
   filterText = signal('');
 
-  availableCardNumbers = this.transactionService.GetAvailableCardNumbers;
-
-  filteredCardNumbers = computed(() => {
-    const filter = this.filterText().toLowerCase();
-    if (!filter) {
-      return this.availableCardNumbers();
-    }
-    return this.availableCardNumbers().filter(cardNumber =>
-      cardNumber.toString().includes(filter)
-    );
+  availableCardNumbers = computed(() => {
+    const cardNumbers = this.transactions().map(t => t.cardNumber);
+    return [...new Set(cardNumbers)].sort();
   });
 
-  filteredTransactions = this.transactionService.GetFilteredTransactions;
+  cardOptions = computed<ComboboxOption[]>(() => {
+    return this.availableCardNumbers().map(cardNumber => ({
+      value: cardNumber,
+      label: `Card: ${cardNumber}`
+    }));
+  });
+
+  filteredCardOptions = computed(() => {
+    const filter = this.filterText().toLowerCase();
+    if (!filter) {
+      return this.cardOptions();
+    }
+    return this.cardOptions().filter(option =>
+      option.label.toLowerCase().includes(filter) ||
+      option.value.toString().includes(filter)
+    );
+  });
 
   toggleDropdown() {
     this.isDropdownOpen.set(!this.isDropdownOpen());
@@ -39,13 +60,15 @@ export class Combobox {
   }
 
   selectCard(cardNumber: number) {
-    this.transactionService.setSelectedCardNumber(cardNumber);
+    this.selectedCardNumber.set(cardNumber);
+    this.selectedCardChange.emit(cardNumber);
     this.filterText.set('');
     this.closeDropdown();
   }
 
   clearSelection() {
-    this.transactionService.setSelectedCardNumber(null);
+    this.selectedCardNumber.set(null);
+    this.selectedCardChange.emit(null);
     this.filterText.set('');
     this.closeDropdown();
   }
@@ -53,7 +76,8 @@ export class Combobox {
   onFilterInput(event: Event) {
     const target = event.target as HTMLInputElement;
     this.filterText.set(target.value);
-    this.transactionService.setSelectedCardNumber(null); // Clear selection
+    this.selectedCardNumber.set(null);
+    this.selectedCardChange.emit(null);
     this.isDropdownOpen.set(true);
   }
 
@@ -71,24 +95,10 @@ export class Combobox {
     return '';
   }
 
-  getDisplayText(): string {
-    if (this.selectedCardNumber()) {
-      return `Card: ${this.selectedCardNumber()}`;
-    }
-    return this.filterText() || 'Select a card number...';
-  }
-
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.closeDropdown();
     }
   }
-
-  deleteTransaction(transaction: any) {
-    if (confirm(`Are you sure you want to delete this transaction of $${transaction.amount}?`)) {
-      this.transactionService.deleteTransaction(transaction.uid);
-    }
-  }
-
 }
