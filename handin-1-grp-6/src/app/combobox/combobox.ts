@@ -13,13 +13,10 @@ export class Combobox {
   transactions = this.transactionService.GetTransactions;
   
   isDropdownOpen = signal(false);
-  selectedCardNumber = signal<string | null>(null);
+  selectedCardNumber = this.transactionService.selectedCardNumber;
   filterText = signal('');
   
-  availableCardNumbers = computed(() => {
-    const cardNumbers = this.transactions().map(t => t.cardNumber);
-    return [...new Set(cardNumbers)].sort();
-  });
+  availableCardNumbers = this.transactionService.GetAvailableCardNumbers;
   
   filteredCardNumbers = computed(() => {
     const filter = this.filterText().toLowerCase();
@@ -31,15 +28,7 @@ export class Combobox {
     );
   });
   
-  filteredTransactions = computed(() => {
-    const selectedCard = this.selectedCardNumber();
-    if (!selectedCard) {
-      return this.transactions();
-    }
-    return this.transactions().filter(transaction => 
-      transaction.cardNumber === selectedCard
-    );
-  });
+  filteredTransactions = this.transactionService.GetFilteredTransactions;
   
   toggleDropdown() {
     this.isDropdownOpen.set(!this.isDropdownOpen());
@@ -50,13 +39,13 @@ export class Combobox {
   }
   
   selectCard(cardNumber: string) {
-    this.selectedCardNumber.set(cardNumber);
+    this.transactionService.setSelectedCardNumber(cardNumber);
     this.filterText.set('');
     this.closeDropdown();
   }
   
   clearSelection() {
-    this.selectedCardNumber.set(null);
+    this.transactionService.setSelectedCardNumber(null);
     this.filterText.set('');
     this.closeDropdown();
   }
@@ -64,7 +53,7 @@ export class Combobox {
   onFilterInput(event: Event) {
     const target = event.target as HTMLInputElement;
     this.filterText.set(target.value);
-    this.selectedCardNumber.set(null); // Clear selectionen
+    this.transactionService.setSelectedCardNumber(null); // Clear selection
     this.isDropdownOpen.set(true);
   }
   
