@@ -2,11 +2,13 @@ import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatDialogRef} from '@angular/material/dialog';
 import {TransactionService} from '../../../../transaction-service';
+import {Combobox} from '../../../../combobox/combobox';
 
 @Component({
   selector: 'app-create-transaction-modal',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Combobox
   ],
   templateUrl: './create-transaction-modal.html',
 })
