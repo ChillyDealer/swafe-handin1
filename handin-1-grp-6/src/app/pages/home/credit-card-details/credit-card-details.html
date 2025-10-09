@@ -60,10 +60,42 @@
     </div>
 
 
+    <!-- trans -->
+    <div class="mt-6 pt-4 border-t">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold text-gray-900">Transactions</h3>
+        <button
+          (click)="toggleTransactions()"
+          class="px-3 py-1 bg-gray-600 text-white text-sm rounded-lg hover:bg-gray-700 transition-colors">
+          {{ showTransactions() ? 'Hide' : 'Show' }} Transactions ({{ cardTransactions().length }})
+        </button>
+      </div>
+
+      <div *ngIf="showTransactions()" class="space-y-3 max-h-60 overflow-y-auto">
+        <div *ngFor="let transaction of cardTransactions(); trackBy: trackTransaction" 
+             class="rounded-lg p-4 border">
+          <div class="flex justify-between items-start">
+            <div class="space-y-1">
+              <div class="flex items-center gap-4">
+                <span class="font-semibold text-lg text-gray-900">${{ transaction.amount }}</span>
+                <span class="text-sm text-gray-500">{{ transaction.currencyCode }}</span>
+              </div>
+              <div class="text-sm text-gray-600">{{ transaction.transactionDate | date:'short' }}</div>
+              <div *ngIf="transaction.comment" class="text-sm text-gray-700">{{ transaction.comment }}</div>
+            </div>
+          </div>
+        </div>
+        
+        <div *ngIf="cardTransactions().length === 0" class="text-center text-gray-500 py-4">
+          No transactions...
+        </div>
+      </div>
+    </div>
+
     <div class="flex justify-between items-center mt-8 pt-4 border-t">
       <button
         (click)="onDeleteCard()"
-        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+        class="px-4 py-2 text-black border rounded-lg hover:bg-red-600 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
         Delete Card
       </button>
       <button

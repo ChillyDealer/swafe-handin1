@@ -1,29 +1,48 @@
-import { Component, Input, Output, EventEmitter, inject, OnChanges, OnDestroy } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { Component, Input, Output, EventEmitter, inject, OnChanges, OnDestroy, signal, computed } from '@angular/core';
+import { NgIf, NgFor, CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { CreditCard } from '../../../Models/CreditCard';
 import { ExpirationDatePipe } from '../../../pipes/expiration-date.pipe';
+import { TransactionService, Transaction } from '../../../transaction-service';
 
 @Component({
   selector: 'app-credit-card-details',
   standalone: true,
-  imports: [NgIf, ExpirationDatePipe],
+  imports: [NgIf, NgFor, CommonModule, ExpirationDatePipe],
   templateUrl: './credit-card-details.html',
   styleUrl: './credit-card-details.css'
 })
 export class CreditCardDetails implements OnChanges, OnDestroy {
   private http = inject(HttpClient);
+  private transactionService = inject(TransactionService);
 
   @Input() isOpen: boolean = false;
-  @Input() card: CreditCard | null = null;
+  @Input() set card(value: CreditCard | null) {
+    this.cardSignal.set(value);
+  }
+  get card(): CreditCard | null {
+    return this.cardSignal();
+  }
+  
   @Output() closeModal = new EventEmitter<void>();
   @Output() cardDeleted = new EventEmitter<string>();
+
+  private cardSignal = signal<CreditCard | null>(null);
+  showTransactions = signal(false);
+  
+  cardTransactions = computed(() => {
+    const currentCard = this.cardSignal();
+    if (!currentCard) return [];
+    const allTransactions = this.transactionService.GetTransactions();
+    return allTransactions.filter(t => Number(t.cardNumber) === currentCard.cardNumber);
+  });
 
   ngOnChanges() {
     if (this.isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
+      this.showTransactions.set(false);
     }
   }
 
@@ -57,5 +76,13 @@ export class CreditCardDetails implements OnChanges, OnDestroy {
           }
         });
     }
+  }
+
+  toggleTransactions() {
+    this.showTransactions.set(!this.showTransactions());
+  }
+
+  trackTransaction(index: number, transaction: Transaction): string {
+    return transaction.uid;
   }
 }
